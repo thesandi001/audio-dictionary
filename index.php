@@ -59,10 +59,10 @@
 	<script src="js/app/app.js"></script>
 	<script src="js/app/controllers.js"></script>  
 
-  <!-- sharethis button -->
-  <script type="text/javascript">var switchTo5x=true;</script>
-  <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-  <script type="text/javascript">stLight.options({publisher: "6f68b8af-410b-4c0b-9046-b59b53544254", doNotHash: false, doNotCopy: false, hashAddressBar: true});</script>
+	<!-- sharethis button -->
+	<script type="text/javascript">var switchTo5x=true;</script>
+	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+	<script type="text/javascript">stLight.options({publisher: "6f68b8af-410b-4c0b-9046-b59b53544254", doNotHash: false, doNotCopy: false, hashAddressBar: true});</script>
 	
   </body>
 </html>
