@@ -1,0 +1,154 @@
+<div class="row bg-light-grey border-bottom">
+	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+		<span class="head1"><span class="italics">Lets</span>Venture Dictionary</span><br>
+		<span class="italics">--- a quest to design advanced, feature rich online vocabulary builder</span>
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+		<div class="round-box margin-top">
+			API Hits: <span>{{response.api_hits}}</span><br>
+			Total Bookmarks: {{bookmarks.count}}
+		</div>
+	</div>
+</div>
+
+<!-- <h3 class="page-header">Dashboard </h3> -->
+
+<div class="row border-bottom">
+	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
+		
+		  <ul class="pagination pagination-sm margin-up">
+		    
+		    <!-- <li>
+		      <a href="#" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li> -->
+		    
+		    <li ng-repeat="i in letters"><a href="#/home/{{i}}">{{i}}</a></li>
+		    
+		    <!-- <li>
+		      <a href="#" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li> -->
+
+		  </ul>
+		
+
+		<div class="selected-word-container margin-bottom head2 font-color">
+			<span>{{bigWordPlaceHolder}}</span>
+			<span class="float-right">
+				<a class="clickable" ng-if="bigAudioLink!=''" ng-click="playSound(this, bigAudioLink);"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></a>
+				<a class="clickable" ng-if="bigBookmarkButton!=''" ng-click="addBookmark(bigBookmarkButton)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+				<a class="clickable" ng-if="bigShareButton!=''" ng-click="openShareBox(bigShareButton)" data-toggle="modal" data-target="#shareWordModal"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a>				
+			</span>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="margin-bottom-negetive">
+					<div class="form-group has-feedback">
+					    <input type="text" class="form-control" ng-model="searchTerm" ng-change="search(searchTerm)" ng-minlength=1 placeholder="Search words..." autofocus />
+					    <i class="glyphicon glyphicon-search form-control-feedback"></i>
+					</div>			
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<a class="btn btn-primary float-right" data-toggle="modal" data-target="#addWordModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ADD WORDS</a>
+			</div>
+		</div>
+		
+		<div class="table-height">
+			<table class="table table-striped table-hover">
+			    <thead>
+			      <tr>
+			        <th>Word</th>
+			        <th>Description</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr class="clickable" ng-repeat="row in response.data | filter : searchTerm" ng-click="loadWord(row.word,row.description,row.audio_url)">
+			        <td><span>{{row.word}}</span></td>
+			        <td><span>{{row.description}}</span></td>
+			        <td><a class="clickable" ng-click="playSound(this, row.audio_url);"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></a></td>
+			        <td><a class="clickable" ng-click="addBookmark(row.word)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
+			      </tr>		      
+			    </tbody>
+			</table>
+		</div>
+
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 bg-light-grey border-left">
+		<div class="font-color margin-top margin-bottom">
+			<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> <span class="bold">Bookmark History</span>
+		</div>
+		<div class="bookmark-box font-color margin-bottom">			
+			<div ng-repeat="row in bookmarks.data" class="padding-all border-bottom-grey">
+				<span class="bold clickable" ng-click="loadWord(row.word)">{{row.word}}</span><a class="float-right" ng-click="deleteBookmark(row.word)"><span class="glyphicon glyphicon-minus clickable" aria-hidden="true"></span></a>
+			</div>
+		</div>
+		
+		<center>
+		<!--<a class="btn btn-primary width-auto"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> Download</a>-->
+		<div class="margin-bottom"></div>
+		<a class="btn btn-default width-auto" ng-click="clearBookmark()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Clear Bookmarks</a>
+		</center>
+		
+		<div class="margin-bottom"></div>
+
+	</div>	
+</div>
+
+
+<!-- Button trigger modal -->
+
+<div class="modal fade" id="addWordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add word to dictionary</h4>
+      </div>
+      <div class="modal-body">
+
+      <center><h3>{{addWordResponse.meta.message}}</h3></center>
+        
+        <div class="form-group">
+		    <input type="text" class="form-control" ng-model="word" placeholder="Word" /><br>
+		    <textarea class="form-control" ng-model="description" placeholder="Description" ></textarea><br>
+		    <input type="text" class="form-control" ng-model="audio_url" placeholder="Audio URL" />
+		</div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="addWord(word,description,audio_url)">Add Word</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+
+<div class="modal fade" id="shareWordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Share word</h4>
+      </div>
+      <div class="modal-body">
+  
+        <span class='st_facebook_large' displayText='Facebook'></span>
+		<span class='st_googleplus_large' displayText='Google +'></span>
+		<span class='st_twitter_large' displayText='Tweet'></span>		
+		<span class='st_pinterest_large' displayText='Pinterest'></span>
+		<span class='st_email_large' displayText='Email'></span>
+		<span class='st_sharethis_large' displayText='ShareThis'></span>
+
+      </div>
+    </div>
+  </div>
+</div>
