@@ -35,7 +35,7 @@ appControllers.controller('HomeController', ['$scope', '$http','$routeParams', f
 	
 	// getting the words and descriptions
 	$http.get(home, {params})
-	.success(function(data){			
+	.success(function(data){
 		$scope.response = data;	
 		$scope.bigWordPlaceHolder = "[Selected Word]";
 		$scope.bigAudioLink = "";
@@ -50,7 +50,7 @@ appControllers.controller('HomeController', ['$scope', '$http','$routeParams', f
 	});
 
 	// search
-	$scope.search = function(q) { 		
+	$scope.search = function(q) {
 		var params = {	
 			q : q
 		};
@@ -61,7 +61,7 @@ appControllers.controller('HomeController', ['$scope', '$http','$routeParams', f
 	}
 
 	// adding a new word to dictionary
-	$scope.addWord = function(word,description,audio_url) { 		
+	$scope.addWord = function(word,description,audio_url) {
 		var params = {	
 			word : word,
 			description : description,
@@ -75,7 +75,7 @@ appControllers.controller('HomeController', ['$scope', '$http','$routeParams', f
 	}
 
 	 // laoding a word to the main word holder
-	$scope.loadWord = function(word,description,audio_url) { 		
+	$scope.loadWord = function(word,description,audio_url) {
 		$scope.bigWordPlaceHolder = word;
 		$scope.bigAudioLink = audio_url;
 		$scope.bigBookmarkButton = word;							
@@ -83,7 +83,7 @@ appControllers.controller('HomeController', ['$scope', '$http','$routeParams', f
 	}
 
 	// adding a bookmark
-	$scope.addBookmark = function(word) { 		
+	$scope.addBookmark = function(word) {
 		var params = {	
 			word : word
 		};
@@ -95,7 +95,7 @@ appControllers.controller('HomeController', ['$scope', '$http','$routeParams', f
 	}
 
 	// delete a single bookamrk
-	$scope.deleteBookmark = function(word) { 
+	$scope.deleteBookmark = function(word) {
 		var params = {	
 			word : word
 		};
@@ -107,7 +107,7 @@ appControllers.controller('HomeController', ['$scope', '$http','$routeParams', f
 	}
 
 	// clear all bookmarks
-	$scope.clearBookmark = function() { 
+	$scope.clearBookmark = function() {
 		$http.get(clear_bookmark, {})
 		.success(function(data){			
 			$scope.bookmarks = data;						
